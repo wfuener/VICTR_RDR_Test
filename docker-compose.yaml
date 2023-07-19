@@ -1,0 +1,42 @@
+version: "3.7"
+
+services:
+
+  postgres:
+    image: "postgres:15.3"
+    container_name: pg_docker
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_DB: events_db
+      POSTGRES_PASSWORD: ${PG_PW}
+
+  flyway:
+    image: flyway/flyway
+    command: -url=jdbc:postgresql://pg_docker:5432/events_db -user=${PG_USER} -password=${PG_PW} -connectRetries=10 -placeholders.environment=development  migrate
+#    environment:
+#      FLYWAY_CONFIG_FILES: /flyway/flyway.conf
+    volumes:
+      - ./flyway/sql:/flyway/sql
+#      - ./flyway/flyway.conf:/flyway/flyway.conf
+
+#  api:
+#    build: ./events_app
+#    container_name: api
+#    hostname: api
+#    network_mode: "host"
+#    expose:
+#      - 8000
+#    environment:
+#      docker_url: api
+#      PG_NAME: events_db
+#      PG_HOSTNAME: '0.0.0.0'
+#      PG_PORT: 5434
+#      PG_USER: ${PG_USER}
+#      PG_PW: ${PG_PW}
+#    volumes:
+#      - type: bind
+#        source: ./events_app
+#        target: /app
+

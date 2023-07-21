@@ -1,4 +1,5 @@
-CREATE extension if not exists "uuid-ossp";
+CREATE EXTENSION if not exists "uuid-ossp";
+CREATE EXTENSION  if not exists pg_trgm;
 
 create schema events_tracking;
 

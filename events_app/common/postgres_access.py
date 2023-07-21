@@ -60,9 +60,12 @@ class PostgresAccess:
                 stmt = await conn.prepare(query)    # use prepared statements to guard against sql injection
                 logger.debug(f"{data}{query}")
 
+                records = await stmt.fetch(*data)
                 # if no records are returned by the query, None will be returned
-                return await stmt.fetch(*data)
+                if records:
+                    records = [dict(record) for record in records]
 
+                return records
         except Exception as exc:
             logger.error(f"ERROR ON QUERY:{query} {data}")
             # Log error type and error message

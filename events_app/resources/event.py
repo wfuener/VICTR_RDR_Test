@@ -70,6 +70,6 @@ class EventResource(object):
         """Delete an event"""
         event_id = req.get_param("event_id", required=True)
         sql = """delete from events_tracking.event where event_id = $1"""
-        await req.context.pg.query(sql)
+        await req.context.pg.query(sql, [event_id])
 
         resp.media = {"message": "deleted"}

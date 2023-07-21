@@ -2,7 +2,9 @@
 Run `docker-compose up --build` the first time you run the code. Afterwards you can just run `docker-compose up` because the containers already have been build
 ### This solution should provide
 
-`GET /test-data`This first endpoint only exists for demo purposes so you don't have to connect to the database to view the generated data and ids
+`GET /test-data`This first endpoint only exists for demo purposes so you don't have to connect to the database to view the generated data and ids. `user_id` and `event_id` are randomly generated so you will have to run this 
+to get the data the database was seeded with.
+
 ```
 curl 127.0.0.1:8000/test-data 
 NOTE its easier to read output if you pipe it though the jq tool e.g. curl 127.0.0.1:8000/test-data | jq
@@ -64,7 +66,7 @@ RETURNS HTTP 200
 
 `POST /event` create an event
 ```
-curl -d '{"user_id": "___", "title": "button click", "description": "user clicked next button"}' -H "Content-Type: application/json" -X POST 127.0.0.1:8000/event?event_id
+curl -d '{"user_id": "46dba1d3-4850-4dec-bb3b-d67a7daddd3c", "title": "button click", "description": "user clicked next button"}'  -H "Content-Type: application/json" -X POST 127.0.0.1:8000/event?event_id
 
 RETURN 201 {"event_id":"c800eae1-a272-4f58-be35-f24276fd18c4"}
 ```
@@ -83,7 +85,7 @@ RETURN HTTP 200 {"message":"deleted"}
 `GET /search` search either title, description, or both. Do this by changing the type field to one of [title, description, or both]
 ```
 
-curl 127.0.0.1:8000/search \
+curl -G 127.0.0.1:8000/search \
 -d user_id=93db8fcb-319d-4867-9f18-dec3ee5a2f9b \
 -d query=test \
 -d type=both

@@ -74,7 +74,6 @@ class EventResource(object):
         resp.media = {"message": "deleted"}
 
 
-
 class TestResource(object):
     """This Resource only exists for the demo reasons"""
 
@@ -85,5 +84,4 @@ class TestResource(object):
             select * from events_tracking."user" u inner join events_tracking.event e on u.user_id = e.user_id
         """)
         resp.media = results
-
 

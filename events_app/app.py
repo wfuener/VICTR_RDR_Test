@@ -1,10 +1,7 @@
-import rapidjson
-import asyncio
 import falcon.asgi
-from functools import partial
 from dotenv import load_dotenv
 
-from resources.event import EventResource
+from resources.event import EventResource, TestResource
 from resources.search import SearchResource
 
 from middleware import *
@@ -32,7 +29,9 @@ class Ping:
         resp.media = "Ping"
 
 
+# define routes
 api.add_route('/', Ping())
+api.add_route('/test-data', TestResource())
 api.add_route('/event', EventResource())
 api.add_route('/search', SearchResource())
 

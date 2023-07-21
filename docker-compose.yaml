@@ -15,11 +15,8 @@ services:
   flyway:
     image: flyway/flyway
     command: -url=jdbc:postgresql://pg_docker:5432/events_db -user=${PG_USER} -password=${PG_PW} -connectRetries=10 -placeholders.environment=development  migrate
-#    environment:
-#      FLYWAY_CONFIG_FILES: /flyway/flyway.conf
     volumes:
       - ./flyway/sql:/flyway/sql
-#      - ./flyway/flyway.conf:/flyway/flyway.conf
 
   api:
     build: ./events_app

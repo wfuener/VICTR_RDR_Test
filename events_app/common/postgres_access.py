@@ -38,7 +38,7 @@ class PostgresAccess:
         except (ConnectionResetError, ConnectionRefusedError) as exc:
             logger.error("Postgres connection failed. It might not be set up yet. Waiting 5 seconds and trying again ")
             time.sleep(5)
-            await self.create_conn()
+            await self.create_pool()
         except Exception as exc:
             logger.error(f"Error getting database: {exc.__class__.__name__} - {str(exc)} ")
 

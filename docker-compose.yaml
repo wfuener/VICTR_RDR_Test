@@ -17,6 +17,8 @@ services:
     command: -url=jdbc:postgresql://pg_docker:5432/events_db -user=${PG_USER} -password=${PG_PW} -connectRetries=10 -placeholders.environment=development  migrate
     volumes:
       - ./flyway/sql:/flyway/sql
+    depends_on:
+      - postgres
 
   api:
     build: ./events_app

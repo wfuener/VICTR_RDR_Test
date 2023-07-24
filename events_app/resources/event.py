@@ -5,7 +5,7 @@ from jsonschema.exceptions import ValidationError
 from common.utils import validator
 from common.utils import logger
 
-
+# NOTE in a production system this try catch should be abstracted away to not repeat code
 async def event_validation(req: Request, resp: Response, self, kwargs):
     """Using the jsonschema library define what an incoming event should be like.
     If validation HTTP_422 is retured via falcon's HTTPUnprocessableEntity execution.

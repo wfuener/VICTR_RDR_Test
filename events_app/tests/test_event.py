@@ -20,15 +20,20 @@ def test_create_event(client):
 def test_get_event_by_id(client):
     result = client.simulate_get('/event', params={"event_id": EVENT_ID})
     assert result.status == falcon.HTTP_200
+    assert list(result.json[0].keys()) == ['description', 'event_id', 'meta_create_ts', 'meta_update_ts',
+                                           'title', 'ts_description', 'ts_title', 'user_id']
 
 
 def test_get_user_events(client):
     result = client.simulate_get('/event', params={"user_id": USER_ID})
     assert result.status == falcon.HTTP_200
+    assert list(result.json[0].keys()) == ['description', 'event_id', 'meta_create_ts',
+                                           'meta_update_ts', 'title', 'ts_description', 'ts_title', 'user_id']
 
 
 def test_delete_event(client):
     result = client.simulate_delete('/event', params={"event_id": EVENT_ID})
     assert result.status == falcon.HTTP_200
+    assert result.json == {"message": "deleted"}
 
 

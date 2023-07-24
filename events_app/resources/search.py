@@ -1,7 +1,7 @@
 import falcon.media
 from common.utils import *
 
-
+# search for both a title and description
 TITLE_DESCRIPTION_SEARCH = """
     SELECT
         events_tracking.event.event_id,
@@ -25,7 +25,7 @@ TITLE_DESCRIPTION_SEARCH = """
     ORDER BY ts_rank, similarity DESC
 """
 
-
+# search for a title
 TITLE_SEARCH = """
     SELECT
         events_tracking.event.event_id,
@@ -47,7 +47,7 @@ TITLE_SEARCH = """
     ORDER BY ts_rank, similarity DESC
 """
 
-
+# search for a description
 DESCRIPTION_SEARCH = """
     SELECT
         events_tracking.event.event_id,
@@ -62,27 +62,6 @@ DESCRIPTION_SEARCH = """
         ts_rank(ts_description, query) ts_rank,
 
         SIMILARITY($1, events_tracking.event.title) similarity
-    WHERE user_id = $2 AND (
-        -- either an exact match or fuzzy matching score greater then 0
-        query @@ ts_description  OR ts_rank > 0 OR  similarity > 0
-    )
-    ORDER BY ts_rank, similarity DESC
-"""
-
-GENERAL = """
-    SELECT
-        events_tracking.event.event_id,
-        events_tracking.event.title,
-        events_tracking.event.description,
-        ts_rank,
-        similarity
-    FROM
-        events_tracking.event,
-        to_tsquery($1) query,
-
-        ts_rank(ts_description, query) ts_rank,
-
-        SIMILARITY($1) similarity
     WHERE user_id = $2 AND (
         -- either an exact match or fuzzy matching score greater then 0
         query @@ ts_description  OR ts_rank > 0 OR  similarity > 0

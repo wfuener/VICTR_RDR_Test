@@ -1,5 +1,9 @@
+### High level overview
+This rest API is running Python version 3.1 with the Falcon Web Framework. It will connect with a Postgres docker container which the DDL is created via flyway.
+
 ### Running
-Run `docker-compose up --build` the first time you run the code. Afterwards you can just run `docker-compose up` because the containers already have been build
+Run `docker-compose up --build` the first time you run the code. Afterwards you can just run `docker-compose up` because the containers already have been build. Also, If you would like to run the api outside the docker container you can run `docker-compose up flyway postgres` thus specifying the database to be built only
+
 ### This solution should provide
 
 `GET /test-data`This first endpoint only exists for demo purposes so you don't have to connect to the database to view the generated data and ids. `user_id` and `event_id` are randomly generated so you will have to run this 
